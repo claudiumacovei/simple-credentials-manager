@@ -11,6 +11,8 @@ import com.claudiu.macovei.IntegrationTest;
 import com.claudiu.macovei.domain.Credential;
 import com.claudiu.macovei.repository.CredentialRepository;
 import com.claudiu.macovei.repository.search.CredentialSearchRepository;
+import com.claudiu.macovei.service.CredentialService;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -60,6 +62,12 @@ class CredentialResourceIT {
 
     @Autowired
     private CredentialRepository credentialRepository;
+
+    @Mock
+    private CredentialRepository credentialRepositoryMock;
+
+    @Mock
+    private CredentialService credentialServiceMock;
 
     /**
      * This repository is mocked in the com.claudiu.macovei.repository.search test package.
@@ -181,6 +189,24 @@ class CredentialResourceIT {
             .andExpect(jsonPath("$.[*].enabled").value(hasItem(DEFAULT_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME)))
             .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCredentialsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(credentialServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCredentialMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(credentialServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCredentialsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(credentialServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCredentialMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(credentialServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

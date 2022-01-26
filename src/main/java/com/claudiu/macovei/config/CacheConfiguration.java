@@ -85,6 +85,7 @@ public class CacheConfiguration {
             createCache(cm, com.claudiu.macovei.domain.Credential.class.getName() + ".serviceProviders", jcacheConfiguration);
             createCache(cm, com.claudiu.macovei.domain.IdentityProvider.class.getName(), jcacheConfiguration);
             createCache(cm, com.claudiu.macovei.domain.ServiceProvider.class.getName(), jcacheConfiguration);
+            createCache(cm, com.claudiu.macovei.domain.ServiceProvider.class.getName() + ".credentials", jcacheConfiguration);
             // jhipster-needle-redis-add-entry
         };
     }

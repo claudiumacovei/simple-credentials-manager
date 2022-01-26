@@ -19,8 +19,9 @@
     {
       "otherEntityName": "credential",
       "otherEntityRelationshipName": "serviceProvider",
+      "ownerSide": false,
       "relationshipName": "credential",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"
