@@ -2,6 +2,8 @@ package com.claudiu.macovei.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -25,9 +27,10 @@ public class ServiceProvider implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToMany(mappedBy = "serviceProviders")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "identityProvider", "serviceProviders" }, allowSetters = true)
-    private Credential credential;
+    private Set<Credential> credentials = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -57,16 +60,34 @@ public class ServiceProvider implements Serializable {
         this.name = name;
     }
 
-    public Credential getCredential() {
-        return this.credential;
+    public Set<Credential> getCredentials() {
+        return this.credentials;
     }
 
-    public void setCredential(Credential credential) {
-        this.credential = credential;
+    public void setCredentials(Set<Credential> credentials) {
+        if (this.credentials != null) {
+            this.credentials.forEach(i -> i.removeServiceProvider(this));
+        }
+        if (credentials != null) {
+            credentials.forEach(i -> i.addServiceProvider(this));
+        }
+        this.credentials = credentials;
     }
 
-    public ServiceProvider credential(Credential credential) {
-        this.setCredential(credential);
+    public ServiceProvider credentials(Set<Credential> credentials) {
+        this.setCredentials(credentials);
+        return this;
+    }
+
+    public ServiceProvider addCredential(Credential credential) {
+        this.credentials.add(credential);
+        credential.getServiceProviders().add(this);
+        return this;
+    }
+
+    public ServiceProvider removeCredential(Credential credential) {
+        this.credentials.remove(credential);
+        credential.getServiceProviders().remove(this);
         return this;
     }
 

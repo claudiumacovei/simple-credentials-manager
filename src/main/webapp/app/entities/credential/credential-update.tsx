@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IIdentityProvider } from 'app/shared/model/identity-provider.model';
 import { getEntities as getIdentityProviders } from 'app/entities/identity-provider/identity-provider.reducer';
+import { IServiceProvider } from 'app/shared/model/service-provider.model';
+import { getEntities as getServiceProviders } from 'app/entities/service-provider/service-provider.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './credential.reducer';
 import { ICredential } from 'app/shared/model/credential.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -18,6 +20,7 @@ export const CredentialUpdate = (props: RouteComponentProps<{ id: string }>) => 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const identityProviders = useAppSelector(state => state.identityProvider.entities);
+  const serviceProviders = useAppSelector(state => state.serviceProvider.entities);
   const credentialEntity = useAppSelector(state => state.credential.entity);
   const loading = useAppSelector(state => state.credential.loading);
   const updating = useAppSelector(state => state.credential.updating);
@@ -34,6 +37,7 @@ export const CredentialUpdate = (props: RouteComponentProps<{ id: string }>) => 
     }
 
     dispatch(getIdentityProviders({}));
+    dispatch(getServiceProviders({}));
   }, []);
 
   useEffect(() => {
@@ -46,6 +50,7 @@ export const CredentialUpdate = (props: RouteComponentProps<{ id: string }>) => 
     const entity = {
       ...credentialEntity,
       ...values,
+      serviceProviders: mapIdList(values.serviceProviders),
       identityProvider: identityProviders.find(it => it.id.toString() === values.identityProvider.toString()),
     };
 
@@ -62,6 +67,7 @@ export const CredentialUpdate = (props: RouteComponentProps<{ id: string }>) => 
       : {
           ...credentialEntity,
           identityProvider: credentialEntity?.identityProvider?.id,
+          serviceProviders: credentialEntity?.serviceProviders?.map(e => e.id.toString()),
         };
 
   return (
@@ -128,6 +134,23 @@ export const CredentialUpdate = (props: RouteComponentProps<{ id: string }>) => 
                 <option value="" key="0" />
                 {identityProviders
                   ? identityProviders.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                label={translate('simplecredentialsmanagerApp.credential.serviceProvider')}
+                id="credential-serviceProvider"
+                data-cy="serviceProvider"
+                type="select"
+                multiple
+                name="serviceProviders"
+              >
+                <option value="" key="0" />
+                {serviceProviders
+                  ? serviceProviders.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

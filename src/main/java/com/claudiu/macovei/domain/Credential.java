@@ -40,9 +40,14 @@ public class Credential implements Serializable {
     @JoinColumn(unique = true)
     private IdentityProvider identityProvider;
 
-    @OneToMany(mappedBy = "credential")
+    @ManyToMany
+    @JoinTable(
+        name = "rel_credential__service_provider",
+        joinColumns = @JoinColumn(name = "credential_id"),
+        inverseJoinColumns = @JoinColumn(name = "service_provider_id")
+    )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "credential" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "credentials" }, allowSetters = true)
     private Set<ServiceProvider> serviceProviders = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -130,12 +135,6 @@ public class Credential implements Serializable {
     }
 
     public void setServiceProviders(Set<ServiceProvider> serviceProviders) {
-        if (this.serviceProviders != null) {
-            this.serviceProviders.forEach(i -> i.setCredential(null));
-        }
-        if (serviceProviders != null) {
-            serviceProviders.forEach(i -> i.setCredential(this));
-        }
         this.serviceProviders = serviceProviders;
     }
 
@@ -146,13 +145,13 @@ public class Credential implements Serializable {
 
     public Credential addServiceProvider(ServiceProvider serviceProvider) {
         this.serviceProviders.add(serviceProvider);
-        serviceProvider.setCredential(this);
+        serviceProvider.getCredentials().add(this);
         return this;
     }
 
     public Credential removeServiceProvider(ServiceProvider serviceProvider) {
         this.serviceProviders.remove(serviceProvider);
-        serviceProvider.setCredential(null);
+        serviceProvider.getCredentials().remove(this);
         return this;
     }
 

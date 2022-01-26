@@ -170,10 +170,6 @@ export const ServiceProvider = (props: RouteComponentProps<{ url: string }>) => 
                 <th className="hand" onClick={sort('name')}>
                   <Translate contentKey="simplecredentialsmanagerApp.serviceProvider.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="simplecredentialsmanagerApp.serviceProvider.credential">Credential</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
                 <th />
               </tr>
             </thead>
@@ -186,13 +182,6 @@ export const ServiceProvider = (props: RouteComponentProps<{ url: string }>) => 
                     </Button>
                   </td>
                   <td>{serviceProvider.name}</td>
-                  <td>
-                    {serviceProvider.credential ? (
-                      <Link to={`credential/${serviceProvider.credential.id}`}>{serviceProvider.credential.id}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${serviceProvider.id}`} color="info" size="sm" data-cy="entityDetailsButton">
