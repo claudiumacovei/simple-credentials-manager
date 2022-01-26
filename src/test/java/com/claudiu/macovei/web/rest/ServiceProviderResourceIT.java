@@ -11,6 +11,8 @@ import com.claudiu.macovei.IntegrationTest;
 import com.claudiu.macovei.domain.ServiceProvider;
 import com.claudiu.macovei.repository.ServiceProviderRepository;
 import com.claudiu.macovei.repository.search.ServiceProviderSearchRepository;
+import com.claudiu.macovei.service.ServiceProviderService;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -51,6 +53,12 @@ class ServiceProviderResourceIT {
 
     @Autowired
     private ServiceProviderRepository serviceProviderRepository;
+
+    @Mock
+    private ServiceProviderRepository serviceProviderRepositoryMock;
+
+    @Mock
+    private ServiceProviderService serviceProviderServiceMock;
 
     /**
      * This repository is mocked in the com.claudiu.macovei.repository.search test package.
@@ -158,6 +166,24 @@ class ServiceProviderResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(serviceProvider.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllServiceProvidersWithEagerRelationshipsIsEnabled() throws Exception {
+        when(serviceProviderServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restServiceProviderMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(serviceProviderServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllServiceProvidersWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(serviceProviderServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restServiceProviderMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(serviceProviderServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

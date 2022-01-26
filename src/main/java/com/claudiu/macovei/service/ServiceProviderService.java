@@ -34,6 +34,14 @@ public interface ServiceProviderService {
     Page<ServiceProvider> findAll(Pageable pageable);
 
     /**
+     * Get all the serviceProviders with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<ServiceProvider> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
      * Get the "id" serviceProvider.
      *
      * @param id the id of the entity.

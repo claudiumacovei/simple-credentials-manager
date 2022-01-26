@@ -8,9 +8,15 @@
     -->
     <changeSet id="20220126163408-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="service_provider_id"
+                                 baseTableName="rel_service_provider__credential"
+                                 constraintName="fk_rel_service_provider__credential__service_provider_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="service_provider"/>
+
         <addForeignKeyConstraint baseColumnNames="credential_id"
-                                 baseTableName="service_provider"
-                                 constraintName="fk_service_provider__credential_id"
+                                 baseTableName="rel_service_provider__credential"
+                                 constraintName="fk_rel_service_provider__credential__credential_id"
                                  referencedColumnNames="id"
                                  referencedTableName="credential"/>
     </changeSet>

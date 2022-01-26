@@ -19,7 +19,7 @@
     {
       "otherEntityName": "credential",
       "otherEntityRelationshipName": "serviceProvider",
-      "ownerSide": false,
+      "ownerSide": true,
       "relationshipName": "credential",
       "relationshipType": "many-to-many"
     }

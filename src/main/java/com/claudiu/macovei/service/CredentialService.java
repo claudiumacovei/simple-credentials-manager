@@ -34,14 +34,6 @@ public interface CredentialService {
     Page<Credential> findAll(Pageable pageable);
 
     /**
-     * Get all the credentials with eager load of many-to-many relationships.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
-    Page<Credential> findAllWithEagerRelationships(Pageable pageable);
-
-    /**
      * Get the "id" credential.
      *
      * @param id the id of the entity.

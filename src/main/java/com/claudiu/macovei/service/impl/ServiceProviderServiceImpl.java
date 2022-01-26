@@ -71,11 +71,15 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return serviceProviderRepository.findAll(pageable);
     }
 
+    public Page<ServiceProvider> findAllWithEagerRelationships(Pageable pageable) {
+        return serviceProviderRepository.findAllWithEagerRelationships(pageable);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<ServiceProvider> findOne(Long id) {
         log.debug("Request to get ServiceProvider : {}", id);
-        return serviceProviderRepository.findById(id);
+        return serviceProviderRepository.findOneWithEagerRelationships(id);
     }
 
     @Override

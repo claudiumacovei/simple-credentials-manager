@@ -77,15 +77,11 @@ public class CredentialServiceImpl implements CredentialService {
         return credentialRepository.findAll(pageable);
     }
 
-    public Page<Credential> findAllWithEagerRelationships(Pageable pageable) {
-        return credentialRepository.findAllWithEagerRelationships(pageable);
-    }
-
     @Override
     @Transactional(readOnly = true)
     public Optional<Credential> findOne(Long id) {
         log.debug("Request to get Credential : {}", id);
-        return credentialRepository.findOneWithEagerRelationships(id);
+        return credentialRepository.findById(id);
     }
 
     @Override

@@ -40,12 +40,7 @@ public class Credential implements Serializable {
     @JoinColumn(unique = true)
     private IdentityProvider identityProvider;
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_credential__service_provider",
-        joinColumns = @JoinColumn(name = "credential_id"),
-        inverseJoinColumns = @JoinColumn(name = "service_provider_id")
-    )
+    @ManyToMany(mappedBy = "credentials")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "credentials" }, allowSetters = true)
     private Set<ServiceProvider> serviceProviders = new HashSet<>();
@@ -135,6 +130,12 @@ public class Credential implements Serializable {
     }
 
     public void setServiceProviders(Set<ServiceProvider> serviceProviders) {
+        if (this.serviceProviders != null) {
+            this.serviceProviders.forEach(i -> i.removeCredential(this));
+        }
+        if (serviceProviders != null) {
+            serviceProviders.forEach(i -> i.addCredential(this));
+        }
         this.serviceProviders = serviceProviders;
     }
 

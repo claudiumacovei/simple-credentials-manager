@@ -21,6 +21,20 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="20220126163408-1-relations" author="jhipster">
+
+        <createTable tableName="rel_service_provider__credential">
+            <column name="credential_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="service_provider_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="service_provider_id, credential_id" tableName="rel_service_provider__credential"/>
+    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

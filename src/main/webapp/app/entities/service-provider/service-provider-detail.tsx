@@ -35,6 +35,19 @@ export const ServiceProviderDetail = (props: RouteComponentProps<{ id: string }>
             </span>
           </dt>
           <dd>{serviceProviderEntity.name}</dd>
+          <dt>
+            <Translate contentKey="simplecredentialsmanagerApp.serviceProvider.credential">Credential</Translate>
+          </dt>
+          <dd>
+            {serviceProviderEntity.credentials
+              ? serviceProviderEntity.credentials.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.id}</a>
+                    {serviceProviderEntity.credentials && i === serviceProviderEntity.credentials.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/service-provider" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

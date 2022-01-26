@@ -50,7 +50,6 @@ export const CredentialUpdate = (props: RouteComponentProps<{ id: string }>) => 
     const entity = {
       ...credentialEntity,
       ...values,
-      serviceProviders: mapIdList(values.serviceProviders),
       identityProvider: identityProviders.find(it => it.id.toString() === values.identityProvider.toString()),
     };
 
@@ -67,7 +66,6 @@ export const CredentialUpdate = (props: RouteComponentProps<{ id: string }>) => 
       : {
           ...credentialEntity,
           identityProvider: credentialEntity?.identityProvider?.id,
-          serviceProviders: credentialEntity?.serviceProviders?.map(e => e.id.toString()),
         };
 
   return (
@@ -134,23 +132,6 @@ export const CredentialUpdate = (props: RouteComponentProps<{ id: string }>) => 
                 <option value="" key="0" />
                 {identityProviders
                   ? identityProviders.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                label={translate('simplecredentialsmanagerApp.credential.serviceProvider')}
-                id="credential-serviceProvider"
-                data-cy="serviceProvider"
-                type="select"
-                multiple
-                name="serviceProviders"
-              >
-                <option value="" key="0" />
-                {serviceProviders
-                  ? serviceProviders.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

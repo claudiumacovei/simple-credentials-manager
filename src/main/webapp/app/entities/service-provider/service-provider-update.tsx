@@ -46,6 +46,7 @@ export const ServiceProviderUpdate = (props: RouteComponentProps<{ id: string }>
     const entity = {
       ...serviceProviderEntity,
       ...values,
+      credentials: mapIdList(values.credentials),
     };
 
     if (isNew) {
@@ -60,6 +61,7 @@ export const ServiceProviderUpdate = (props: RouteComponentProps<{ id: string }>
       ? {}
       : {
           ...serviceProviderEntity,
+          credentials: serviceProviderEntity?.credentials?.map(e => e.id.toString()),
         };
 
   return (
@@ -96,6 +98,23 @@ export const ServiceProviderUpdate = (props: RouteComponentProps<{ id: string }>
                 data-cy="name"
                 type="text"
               />
+              <ValidatedField
+                label={translate('simplecredentialsmanagerApp.serviceProvider.credential')}
+                id="service-provider-credential"
+                data-cy="credential"
+                type="select"
+                multiple
+                name="credentials"
+              >
+                <option value="" key="0" />
+                {credentials
+                  ? credentials.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/service-provider" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
