@@ -1,0 +1,25 @@
+{
+  "simplecredentialsmanagerApp": {
+    "identityProvider": {
+      "home": {
+        "title": "Identity Providers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Identity Provider",
+        "createOrEditLabel": "Create or edit a Identity Provider",
+        "search": "Search for Identity Provider",
+        "notFound": "No Identity Providers found"
+      },
+      "created": "A new Identity Provider is created with identifier {{ param }}",
+      "updated": "A Identity Provider is updated with identifier {{ param }}",
+      "deleted": "A Identity Provider is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Identity Provider {{ id }}?"
+      },
+      "detail": {
+        "title": "Identity Provider"
+      },
+      "id": "ID",
+      "name": "Name"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "applications": "*",
+  "changelogDate": "20220126163408",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "service_provider",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ServiceProvider",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "credential",
+      "otherEntityRelationshipName": "serviceProvider",
+      "relationshipName": "credential",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

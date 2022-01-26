@@ -1,0 +1,26 @@
+{
+  "simplecredentialsmanagerApp": {
+    "serviceProvider": {
+      "home": {
+        "title": "Service Providers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Service Provider",
+        "createOrEditLabel": "Create or edit a Service Provider",
+        "search": "Search for Service Provider",
+        "notFound": "No Service Providers found"
+      },
+      "created": "A new Service Provider is created with identifier {{ param }}",
+      "updated": "A Service Provider is updated with identifier {{ param }}",
+      "deleted": "A Service Provider is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Service Provider {{ id }}?"
+      },
+      "detail": {
+        "title": "Service Provider"
+      },
+      "id": "ID",
+      "name": "Name",
+      "credential": "Credential"
+    }
+  }
+}
